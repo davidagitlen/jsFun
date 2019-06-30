@@ -24,21 +24,25 @@ const kittyPrompts = {
     
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.filter(
+        kitty => kitty.color === 'orange'
+        ).map(kitty => kitty.name)
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // first I filter out the kitty objects who have a color of orange, and then map that to an array of just their names
   },
 
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.sort(function(firstKitty, secondKitty) {
+        return secondKitty.age - firstKitty.age;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // sort works off of whether the result of comparing 'a' to 'b' is less than, equal to, or greater than zero–in the first case indexing a at a lower value (before) b, in the second not changing the original order, and in the last indexing b at a lower value (before) a... so when comparing numerical values b - a will place them in descending order
   },
 
   growUp() {
@@ -55,8 +59,8 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = kitties.forEach(kitty => kitty.age += 2);
+    return kitties;
   }
 };
 
