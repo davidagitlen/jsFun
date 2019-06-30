@@ -25,8 +25,7 @@ const kittyPrompts = {
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
     const result = kitties.filter(
-        kitty => kitty.color === 'orange'
-        ).map(kitty => kitty.name)
+      kitty => kitty.color === 'orange').map(kitty => kitty.name);
     return result;
 
     // Annotation:
@@ -37,7 +36,7 @@ const kittyPrompts = {
     // Sort the kitties by their age
 
     const result = kitties.sort(function(firstKitty, secondKitty) {
-        return secondKitty.age - firstKitty.age;
+      return secondKitty.age - firstKitty.age;
     });
     return result;
 
@@ -91,11 +90,12 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = {};
+    clubs.forEach(club => club.members.forEach(name =>
+        !result[name] ? (result[name], result[name] = [], result[name].push(`${club.club}`)) : result[name].push(`${club.club}`)))
     return result;
-
     // Annotation:
-    // Write your annotation here as a comment
+    // first iterating through the higher level of the array to access each object, and then running through the array inside each object at club.members, for each value I check against an initially empty object to see if it contains a key of each name in the array, if it doesn't: I create a key, assign it to an empty array, and push the value of the current object's club key into it, if it does: I push the value of the currrent object's club key into it
   }
 };
 
