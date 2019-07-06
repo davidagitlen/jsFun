@@ -53,7 +53,7 @@ describe("SCOPE", () => {
       D: "howdy"
     }]);
     expect(e).withMessage("Your order of execution and/or values for variables in your result object are incorrect").to.be.true
-  }), it("exerciseE", () => {
+  }), it.only("exerciseE", () => {
     const e = JSON.stringify(scope.exerciseE()) == JSON.stringify([{
       C: "Brittany"
     }, {
@@ -64,7 +64,7 @@ describe("SCOPE", () => {
       D: "Brittany"
     }]);
     expect(e).withMessage("Your order of execution and/or values for variables in your result object are incorrect").to.be.true
-  }), it("exerciseF", () => {
+  }), it.only("exerciseF", () => {
     const e = JSON.stringify(scope.exerciseF()) == JSON.stringify([{
       A: "Spot"
     }, {

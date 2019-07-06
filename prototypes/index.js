@@ -91,11 +91,16 @@ const clubPrompts = {
     // }
 
     const result = {};
-    clubs.forEach(club => club.members.forEach(name =>
-        !result[name] ? (result[name], result[name] = [], result[name].push(`${club.club}`)) : result[name].push(`${club.club}`)))
+    clubs.forEach(club => club.members.forEach(function(name) { 
+      if (!result[name]) {
+        result[name] = [];
+      }
+      result[name].push(club.club);
+    }));
+
     return result;
     // Annotation:
-    // first iterating through the higher level of the array to access each object, and then running through the array inside each object at club.members, for each value I check against an initially empty object to see if it contains a key of each name in the array, if it doesn't: I create a key, assign it to an empty array, and push the value of the current object's club key into it, if it does: I push the value of the currrent object's club key into it
+    // first iterating through the higher level of the array to access each object, and then running through the array inside each object at club.members, for each value I check against an initially empty object to see if it contains a key of each name in the array, if it doesn't: I create a key and assign it to an empty array, and push the club name into it, if it does: I push the club name into it 
   }
 };
 
@@ -126,12 +131,14 @@ const modPrompts = {
     //   { mod: 3, studentsPerInstructor: 10 },
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const arr = [];
+    const result = mods.forEach(function(obj){
+      arr.push({mod: obj.mod, studentsPerInstructor: obj.students/obj.instructors});
+    });
+    return arr;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // 
   }
 };
 
@@ -162,8 +169,10 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    let array = [];
+    const result = cakes.forEach(cake=> array.push(
+      {flavor: cake.cakeFlavor, inStock: cake.inStock}));
+    return array;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -190,7 +199,7 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter(cake => cake.inStock > 0);
     return result;
 
     // Annotation:
@@ -201,7 +210,7 @@ const cakePrompts = {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((a,b) => a + b.inStock, 0);
     return result;
 
     // Annotation:
@@ -212,8 +221,9 @@ const cakePrompts = {
     // Return an array of all unique toppings (no duplicates) needed to bake
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let toppings = cakes.map(cake => cake.toppings).flat();
+    let uniqueToppings = new Set(toppings);
+    const result = Array.from(uniqueToppings);
     return result;
 
     // Annotation:
@@ -231,11 +241,16 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const groceryList = {};
+    const toppings = cakes.map(cake => cake.toppings).flat().forEach(topping => !groceryList[topping] ? groceryList[topping] = 1 : groceryList[topping]++);
+    return groceryList;
+    
+    // const result = cakes.reduce((groceryList, cake) => {cake.toppings.forEach(topping => {!groceryList[topping] ? groceryList[topping] = 1 : groceryList[topping]++});
+    //   return groceryList;}, {});
 
+    // return result;
     // Annotation:
-    // Write your annotation here as a comment
+    // First I make a variable groceryList and assign it to an empty array, then I map the array of classrooms into an array of arrays of toppings, and flatten it to a depth of one, and run forEach on that resultant array, checking whether the original object has a key of the topping, if it doesn't setting the key and assigning it to one, if it does incrementing the key's value
   }
 };
 
@@ -266,11 +281,11 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(classroom => classroom.program === 'FE');
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // I filter the original classrooms array and return only the objects whose program is 'FE'
   },
 
   totalCapacities() {
@@ -280,22 +295,22 @@ const classPrompts = {
     //   feCapacity: 110,
     //   beCapacity: 96
     // }
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = {};
+    classrooms.forEach(classroom => !result[`${classroom.program.toLowerCase()}Capacity`] ? result[`${classroom.program.toLowerCase()}Capacity`] = classroom.capacity : result[`${classroom.program.toLowerCase()}Capacity`] += classroom.capacity);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // First I make a variable result and assign it to an empty object, then I run forEach on the classrooms array and check whether that object has a key of the classroom program to lowercase + Capacity–if it doesn't I set the key and assign it to the current object's capacity, if it does I increment the key by the current capacity
   },
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((classroomA, classroomB) => classroomA.capacity - classroomB.capacity);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // I sort the array of classrooms, returning the capacity of the first classroom minus the capacity of the following
   }
 };
 
