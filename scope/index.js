@@ -29,11 +29,16 @@ const scope = {
 
     // Log D: personC
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      {'A' : 'Ben'},
+      {'B' : 'CardiB'},
+      {'C' : 'CardiB'},
+      {'D' : 'Paul'}
+    ];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // all of the function declarations would be hoisted, but the first function that is fired is changePerson, changePerson has a conditional that evaluates to true, it assigns a newly-created global variable 'person' to 'CardiB', and fires beautifyPerson, which immediately fires Log A which logs the value of person'Ben', the next conditional also evaluates to true and reassigns personB to the value of person (CardiB), and personC to the value of personB (CardiB), then fires Log B, which logs the value of personC (CardiB), logs C and D return CardiB and Paul)
   },
 
   exerciseB() {
@@ -63,7 +68,12 @@ const scope = {
 
     // Log D: number
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      {'A': 75},
+      {'B': 64},
+      {'C': 64},
+      {'D': 30}
+    ];
     return result;
 
     // Annotation:
@@ -97,7 +107,12 @@ const scope = {
 
     // Log D: greeting
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      {'A':'Yo'},
+      {'B':'Hey'},
+      {'C':'Hey'},
+      {'D':'Hello'}
+    ];
     return result;
 
     // Annotation:
@@ -131,7 +146,13 @@ const scope = {
 
     // Log D: greeting
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      {'A': 'hi'},
+      {'B': 'welcome'},
+      {'C': 'welcome'},
+      {'D': 'howdy'}
+    ];
+
     return result;
 
     // Annotation:
@@ -163,7 +184,12 @@ const scope = {
 
     // Log D: name
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      {'C':'Brittany'},
+      {'A':'Nathaniel'},
+      {'B':'Nathaniel'},
+      {'D':'Brittany'}
+    ];
     return result;
 
     // Annotation:
@@ -198,7 +224,12 @@ const scope = {
 
     // Log E: dog
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      {'':''},
+      {'':''},
+      {'':''},
+      {'':''}
+    ];
     return result;
 
     // Annotation:
@@ -228,7 +259,12 @@ const scope = {
 
     // Log D: fruit
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      {'A':''},
+      {'B':''},
+      {'C':''},
+      {'D':''}
+    ];
     return result;
 
     // Annotation:
