@@ -336,7 +336,7 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((a,b) => a + b.beers.length, 0);
     return result;
 
     // Annotation:
@@ -352,11 +352,12 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [];
+    breweries.forEach(brewery => result.push({'name': brewery.name, 'beerCount': brewery.beers.length}));
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // I set the result to an empty array, and then run forEach on the breweries, pushing an object literal with the keys name and beerCount into it, with the brewery name and the length of the breweries beer arrays in the appropriate keys
   },
 
   findHighestAbvBeer() {
@@ -364,11 +365,11 @@ const breweryPrompts = {
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map(brewery => brewery.beers).flat().sort((a,b) => b.abv - a.abv)[0];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // I map the breweries into an array of arrays of their beers, flatten it to a depth of one, and then sort it highest to lowest based on abv, and return the first index of that array
   }
 };
 
@@ -412,11 +413,12 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [];
+    instructors.forEach(instructor => result.push({'name': instructor.name, 'studentCount': cohorts.find(cohort => cohort.module === instructor.module).studentCount}));
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // couldn't get this to work with map, so I ended up defining an empty array and pushing an object literal into it for each instructor, with the name key holding the instructor name, and the studentCount key holding the studentCount key of the cohorts object with the same module as the instructor
   },
 
   studentsPerInstructor() {
@@ -426,9 +428,14 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((a,b) => {
+      if (!a[`cohort${b.cohort}`]) {
+        a[`cohort${b.cohort}`] = 0;
+      }
+      a[`cohort${b.cohort}`] += b.studentCount/instructors.filter(instructor => instructor.module === b.module).length;
+      return a;
+    }, {});
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -448,7 +455,17 @@ const turingPrompts = {
     //     Will: [1, 2, 3, 4]
     //   }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.reduce((a,b) => {
+      if (!a[b.name]) {
+        a[b.name] = [];
+      }
+      cohorts.forEach(cohort => {
+        if (cohort.curriculum.some(topic => b.teaches.includes(topic))) {
+          a[b.name].push(cohort.module);
+        }
+      });
+      return a;
+    }, {});
     return result;
 
     // Annotation:
