@@ -356,6 +356,7 @@ const breweryPrompts = {
     breweries.forEach(brewery => result.push({'name': brewery.name, 'beerCount': brewery.beers.length}));
     return result;
 
+
     // Annotation:
     // I set the result to an empty array, and then run forEach on the breweries, pushing an object literal with the keys name and beerCount into it, with the brewery name and the length of the breweries beer arrays in the appropriate keys
   },
@@ -429,10 +430,7 @@ const turingPrompts = {
     // }
 
     const result = cohorts.reduce((a,b) => {
-      if (!a[`cohort${b.cohort}`]) {
-        a[`cohort${b.cohort}`] = 0;
-      }
-      a[`cohort${b.cohort}`] += b.studentCount/instructors.filter(instructor => instructor.module === b.module).length;
+      a[`cohort${b.cohort}`] = b.studentCount/instructors.filter(instructor => instructor.module === b.module).length;
       return a;
     }, {});
     return result;
@@ -456,9 +454,7 @@ const turingPrompts = {
     //   }
 
     const result = instructors.reduce((a,b) => {
-      if (!a[b.name]) {
-        a[b.name] = [];
-      }
+      a[b.name] = [];
       cohorts.forEach(cohort => {
         if (cohort.curriculum.some(topic => b.teaches.includes(topic))) {
           a[b.name].push(cohort.module);
@@ -482,7 +478,19 @@ const turingPrompts = {
     //   recursion: [ 'Pam', 'Leta' ]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((a,b) => {
+      b.curriculum.forEach(topic => {
+        if (!a[topic]) {
+          a[topic] = [];
+        }
+        instructors.forEach(instructor => {
+          if(instructor.teaches.includes(topic) && !a[topic].includes(instructor.name)){
+            a[topic].push(instructor.name);
+          }
+        }); 
+      });
+      return a;
+    }, {});
     return result;
 
     // Annotation:
@@ -500,11 +508,6 @@ const turingPrompts = {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
-
 
 // DATASET: bosses, sidekicks from ./datasets/bosses
 const bossPrompts = {
@@ -517,7 +520,16 @@ const bossPrompts = {
     //   { bossName: 'Scar', sidekickLoyalty: 16 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [];
+    let bossArray = Object.keys(bosses).map(name => name.charAt(0).toUpperCase() + name.slice(1));
+    bossArray.forEach(boss => 
+      result.push({'bossName': boss, 'sidekickLoyalty': sidekicks.reduce((a,b) => {
+        if (b.boss === boss) {
+          a += b.loyaltyToBoss;
+        }
+        return a;
+      }, 0)}
+      ));
     return result;
 
     // Annotation:
@@ -525,21 +537,11 @@ const bossPrompts = {
   }
 };
 
-
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
-
 
 // DATASET: constellations, stars } from ./datasets/astronomy
 const astronomyPrompts = {
@@ -559,9 +561,12 @@ const astronomyPrompts = {
     //     color: 'red' }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const keys = Object.keys(constellations);
+    const constellationStars = keys.map(key => constellations[key].stars).flat();
+    const result = stars.filter(star => constellationStars.includes(star.name));
+    
     return result;
-
+    
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -577,7 +582,14 @@ const astronomyPrompts = {
     //   red: [{obj}]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = stars.reduce((a,b) => {
+      stars.forEach(star => {
+        if(!a[star.color]) {
+          a[star.color] = stars.filter(eachStar => eachStar.color === star.color);
+        }
+      });
+      return a;
+    }, {});
     return result;
 
     // Annotation:
@@ -599,7 +611,9 @@ const astronomyPrompts = {
     //    "The Little Dipper" ]
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const orderedStars = stars.sort((a,b) => a.visualMagnitude - b.visualMagnitude).filter(star => star.constellation);
+    const result = orderedStars.map(star => star.constellation
+    );
     return result;
 
     // Annotation:
@@ -629,8 +643,10 @@ const ultimaPrompts = {
 
     // Return the sum of the amount of damage for all the weapons that our characters can use
     // Answer => 113
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    
+    const result = characters.reduce((a,b) => {
+      return a + b.weapons.reduce((a, b) => a + weapons[b].damage, 0);
+    }, 0);
     return result;
 
     // Annotation:
@@ -642,8 +658,8 @@ const ultimaPrompts = {
     // Return the sum damage and total range for each character as an object. 
     // ex: [ { Avatar: { damage: 27, range: 24 }, { Iolo: {...}, ...}
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = ;
+     return result;
 
     // Annotation:
     // Write your annotation here as a comment

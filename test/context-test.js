@@ -25,7 +25,7 @@ describe("CONTEXT", () => {
   }), it("exerciseB", () => {
     const e = "global window object" == context.exerciseB();
     expect(e).withMessage("Your result is not the correct context").to.be.true
-  }), it.only("exerciseC", () => {
+  }), it("exerciseC", () => {
     const e = "el" == context.exerciseC();
     expect(e).withMessage("Your result is not the correct context").to.be.true
   }), it("exerciseD", () => {
@@ -64,7 +64,7 @@ describe("CONTEXT", () => {
   }), it("exerciseO", () => {
     const e = "global window object" == context.exerciseO();
     expect(e).withMessage("Your result is not the correct context").to.be.true
-  }), it("exerciseP", () => {
+  }), it.only("exerciseP", () => {
     const e = "global window object" == context.exerciseP();
     expect(e).withMessage("Your result is not the correct context").to.be.true
   })
